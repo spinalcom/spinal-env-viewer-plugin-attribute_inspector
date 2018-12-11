@@ -46,7 +46,7 @@ with this file. If not, see
 </template>
 
 <script>
-import { SpinalGraphService } from "spinal-env-viewer-graph-service";
+import validationService from "spinal-env-viewer-service-validation";
 
 export default {
   name: "create_validation_context_dialog",
@@ -66,7 +66,7 @@ export default {
       this.contextName = this.contextName.trim();
 
       if (closeResult && this.contextName !== "") {
-        SpinalGraphService.addContext(this.contextName, "validationContext");
+        validationService.createContext(this.contextName).catch(console.error);
       }
 
       this.onFinised({ inputValue: this.inputValue });

@@ -19,30 +19,35 @@ with this file. If not, see
 -->
 
 <template>
-  <md-dialog :md-active.sync="show"
-             @md-closed="closeDialog(false)">
-    <md-dialog-title>Create a Validation Context</md-dialog-title>
+  <div>
+    <md-dialog :md-active.sync="show"
+               @md-closed="closeDialog">
+      <md-dialog-title>Create a Validation Context</md-dialog-title>
 
-    <md-dialog-content>
-      <md-field>
-        <label>Context Name</label>
+      <md-dialog-content>
+        <md-field>
+          <label>Context Name</label>
 
-        <md-input v-model="contextName"></md-input>
-      </md-field>
-    </md-dialog-content>
+          <md-input v-model="contextName"></md-input>
+        </md-field>
+      </md-dialog-content>
 
-    <md-dialog-actions>
-      <md-button class="md-primary"
-                 @click="closeDialog(false)">
-        Close
-      </md-button>
+      <md-dialog-actions>
+        <md-button class="md-primary"
+                   @click="closeDialog">
+          Close
+        </md-button>
 
-      <md-button class="md-primary"
-                 @click="closeDialog(true)">
-        Save
-      </md-button>
-    </md-dialog-actions>
-  </md-dialog>
+        <md-button class="md-primary"
+                   @click="createContext">
+          Save
+        </md-button>
+      </md-dialog-actions>
+    </md-dialog>
+
+    <md-dialog-alert :md-active.sync="error"
+                     md-content="Invalid name" />
+  </div>
 </template>
 
 <script>
@@ -54,7 +59,8 @@ export default {
   data() {
     return {
       show: true,
-      contextName: ""
+      contextName: "",
+      error: false
     };
   },
   methods: {
@@ -62,13 +68,18 @@ export default {
     removed() {
       this.show = false;
     },
-    closeDialog(closeResult) {
+    async createContext() {
       this.contextName = this.contextName.trim();
 
-      if (closeResult && this.contextName !== "") {
-        validationService.createContext(this.contextName).catch(console.error);
+      try {
+        await validationService.createContext(this.contextName);
+        this.closeDialog();
+      } catch (e) {
+        console.error(e);
+        this.error = true;
       }
-
+    },
+    closeDialog() {
       this.onFinised({ inputValue: this.inputValue });
     }
   }

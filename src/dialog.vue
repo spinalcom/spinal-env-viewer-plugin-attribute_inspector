@@ -51,7 +51,7 @@ with this file. If not, see
 </template>
 
 <script>
-import validationService from "spinal-env-viewer-service-validation";
+import { createValidationContext } from "spinal-env-viewer-service-validation";
 
 export default {
   name: "create_validation_context_dialog",
@@ -72,7 +72,7 @@ export default {
       this.contextName = this.contextName.trim();
 
       try {
-        await validationService.createContext(this.contextName);
+        await createValidationContext(this.contextName);
         this.closeDialog();
       } catch (e) {
         console.error(e);

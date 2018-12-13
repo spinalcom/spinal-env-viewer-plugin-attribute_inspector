@@ -28,7 +28,9 @@ import {
 import {
   spinalPanelManagerService
 } from "spinal-env-viewer-panel-manager-service";
-import validationService from "spinal-env-viewer-service-validation";
+import {
+  VALIDATION_CONTEXT_TYPE
+} from "spinal-env-viewer-service-validation";
 
 class App extends SpinalContextApp {
   constructor() {
@@ -44,7 +46,7 @@ class App extends SpinalContextApp {
     const context = option.selectedNode;
 
     if (
-      context.type.get() === validationService.constants.CONTEXT_TYPE
+      context.type.get() === VALIDATION_CONTEXT_TYPE
     ) {
       return Promise.resolve(true);
     }

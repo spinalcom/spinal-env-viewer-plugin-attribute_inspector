@@ -13,11 +13,20 @@
       <md-button @click="selectInvalid">
         {{invalid.length}} INVALID OBJECTS
       </md-button><br />
+
+      <md-button class="md-raised md-primary"
+                 @click="saveRecord">
+        SAVE RECORD
+      </md-button>
     </div>
   </div>
 </template>
 
 <script>
+import { SpinalGraphService } from "spinal-env-viewer-graph-service";
+
+import { createRecord } from "spinal-env-viewer-service-validation";
+
 import hasProperties from "../js/hasProperties";
 
 export default {
@@ -74,6 +83,12 @@ export default {
     },
     selectInvalid() {
       this.viewer.select(this.invalid);
+    },
+    async saveRecord() {
+      const context = SpinalGraphService.getRealNode(this.context.id);
+      const validDbIds = this.valid.map(obj => obj.dbId);
+
+      await createRecord(context, validDbIds, this.invalid);
     }
   }
 };

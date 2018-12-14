@@ -32,20 +32,16 @@ async function loadConfig(context) {
     modelConfig = contextElem.config;
   } catch (e) {
     console.error(e);
-    return;
+    return getDefaultConfig();
   }
 
   if (typeof modelConfig === "undefined") {
-    modelConfig = getDefaultConfig();
-
-    config.useAllDbIds = modelConfig.useAllDbIds;
-    config.referential = modelConfig.referential;
-    config.keys = modelConfig.keys;
-  } else {
-    config.useAllDbIds = modelConfig.useAllDbIds.get();
-    config.referential = lstToArray(modelConfig.referential);
-    config.keys = lstToArray(modelConfig.keys);
+    return getDefaultConfig();
   }
+
+  config.useAllDbIds = modelConfig.useAllDbIds.get();
+  config.referential = lstToArray(modelConfig.referential);
+  config.keys = lstToArray(modelConfig.keys);
 
   return config;
 }
@@ -57,6 +53,7 @@ async function saveConfig(context, config) {
     contextElem = await SpinalGraphService.getRealNode(context.id.get()).getElement();
   } catch (e) {
     console.error(e);
+    return;
   }
 
   contextElem.mod_attr("config", config);

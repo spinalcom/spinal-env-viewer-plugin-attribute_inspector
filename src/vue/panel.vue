@@ -59,7 +59,7 @@ import referentialSelection from "./referentialSelection.vue";
 import keyList from "./keyList.vue";
 import validation from "./validation.vue";
 
-import { getDefaultConfig, loadConfig, saveConfig } from "../js/panelConfig";
+import { loadConfig, saveConfig } from "../js/panelConfig";
 
 export default {
   name: "dialogCreateGeographicContext",

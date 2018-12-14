@@ -73,7 +73,7 @@ export default {
   },
   watch: {
     update() {
-      if (this.update !== "changeContext") {
+      if (this.update != "opened") {
         return;
       }
 
@@ -88,6 +88,7 @@ export default {
         this.clearReferential();
       } else {
         this.config.referential = this.allDbIds.slice();
+        this.$emit("configChanged");
       }
     },
     addSelection() {
@@ -107,9 +108,12 @@ export default {
           queue.push(childId);
         });
       }
+
+      this.$emit("configChanged");
     },
     clearReferential() {
       this.config.referential = [];
+      this.$emit("configChanged");
     },
     showReferential() {
       this.viewer.select(this.config.referential);

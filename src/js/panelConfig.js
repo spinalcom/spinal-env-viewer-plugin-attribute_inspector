@@ -22,7 +22,8 @@ function lstToArray(lst) {
   return arr;
 }
 
-async function loadConfig(context, config) {
+async function loadConfig(context) {
+  const config = {};
   let contextElem;
   let modelConfig;
 
@@ -35,12 +36,18 @@ async function loadConfig(context, config) {
   }
 
   if (typeof modelConfig === "undefined") {
-    return;
+    modelConfig = getDefaultConfig();
+
+    config.useAllDbIds = modelConfig.useAllDbIds;
+    config.referential = modelConfig.referential;
+    config.keys = modelConfig.keys;
+  } else {
+    config.useAllDbIds = modelConfig.useAllDbIds.get();
+    config.referential = lstToArray(modelConfig.referential);
+    config.keys = lstToArray(modelConfig.keys);
   }
 
-  config.useAllDbIds = modelConfig.useAllDbIds.get();
-  config.referential = lstToArray(modelConfig.referential);
-  config.keys = lstToArray(modelConfig.keys);
+  return config;
 }
 
 async function saveConfig(context, config) {

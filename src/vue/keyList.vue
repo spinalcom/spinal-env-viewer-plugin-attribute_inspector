@@ -58,6 +58,7 @@ export default {
   methods: {
     addKey(key) {
       this.keys.push("");
+      this.$emit("keyChanged");
     },
     keySet(index, value) {
       this.keys[index] = value;
@@ -65,6 +66,7 @@ export default {
     },
     removeKey(index) {
       this.keys.splice(index, 1);
+      this.$emit("keyChanged");
     }
   }
 };

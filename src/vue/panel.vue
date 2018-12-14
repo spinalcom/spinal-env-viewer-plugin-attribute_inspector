@@ -23,9 +23,8 @@ with this file. If not, see
 -->
 
 <template>
-  <div>
-    <h3 v-if="context !== null"
-        id="context-name">
+  <div v-if="context !== null && config !== null">
+    <h3 id="context-name">
       {{this.context.name.get()}}
     </h3>
 
@@ -35,7 +34,8 @@ with this file. If not, see
       <md-step id="ref"
                md-label="Choose referential">
         <referential-selection :update="update"
-                               :config="config" />
+                               :config="config"
+                               @configChanged="saveConfig" />
       </md-step>
 
       <md-step id="key-list"
@@ -73,27 +73,16 @@ export default {
       showDialog: true,
       update: "",
       context: null,
-      config: getDefaultConfig(),
+      config: null,
       activeStep: ""
     };
   },
-  watch: {
-    async context(newValue, oldValue) {
-      this.update = new String("changeContext");
-      await loadConfig(this.context, this.config);
-    },
-    config: {
-      deep: true,
-      handler() {
-        this.saveConfig();
-      }
-    }
-  },
   methods: {
-    opened(option) {
+    async opened(option) {
       // Using String constructor so the updates are not strictly identical and trigger watches
       this.update = new String("opened");
       this.context = option.context;
+      this.config = await loadConfig(this.context);
       this.activeStep = "ref";
     },
     removed() {},

@@ -48,7 +48,7 @@ export default {
   },
   data() {
     return {
-      key: ""
+      key: this.keyName
     };
   },
   watch: {

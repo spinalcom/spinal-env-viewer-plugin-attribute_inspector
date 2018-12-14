@@ -61,6 +61,7 @@ export default {
     },
     keySet(index, value) {
       this.keys[index] = value;
+      this.$emit("keyChanged");
     },
     removeKey(index) {
       this.keys.splice(index, 1);

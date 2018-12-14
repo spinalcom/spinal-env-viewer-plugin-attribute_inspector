@@ -40,7 +40,8 @@ with this file. If not, see
 
       <md-step id="key-list"
                md-label="Create key list">
-        <key-list :keys="config.keys" />
+        <key-list :keys="config.keys"
+                  @keyChanged="saveConfig" />
       </md-step>
 
       <md-step id="validation"
@@ -79,13 +80,12 @@ export default {
   watch: {
     async context(newValue, oldValue) {
       this.update = "changeContext";
-
-      await loadConfig(this.config, this.context);
+      await loadConfig(this.context, this.config);
     },
     config: {
       deep: true,
       handler() {
-        saveConfig(this.context, this.config);
+        this.saveConfig();
       }
     }
   },
@@ -98,6 +98,10 @@ export default {
     removed() {},
     closed() {
       this.update = "closed";
+    },
+    async saveConfig() {
+      console.log("saving config");
+      await saveConfig(this.context, this.config);
     }
   }
 };

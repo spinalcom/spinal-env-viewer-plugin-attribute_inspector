@@ -3,6 +3,7 @@ import {
 } from "spinal-env-viewer-graph-service";
 
 const DEFAULT_CONFIG = Object.freeze({
+  useAllDbIds: true,
   referential: Object.freeze([]),
   keys: Object.freeze([])
 });
@@ -21,7 +22,7 @@ function lstToArray(lst) {
   return arr;
 }
 
-async function loadConfig(config, context) {
+async function loadConfig(context, config) {
   let contextElem;
   let modelConfig;
 

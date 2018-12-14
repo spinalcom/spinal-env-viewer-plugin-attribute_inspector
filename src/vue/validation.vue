@@ -55,7 +55,7 @@ export default {
   },
   watch: {
     update() {
-      if (this.update === "changeContext") {
+      if (this.update == "changeContext") {
         this.showProps = false;
       }
     }

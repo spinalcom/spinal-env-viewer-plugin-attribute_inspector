@@ -79,7 +79,7 @@ export default {
   },
   watch: {
     async context(newValue, oldValue) {
-      this.update = "changeContext";
+      this.update = new String("changeContext");
       await loadConfig(this.context, this.config);
     },
     config: {
@@ -91,16 +91,16 @@ export default {
   },
   methods: {
     opened(option) {
-      this.update = "opened";
+      // Using String constructor so the updates are not strictly identical and trigger watches
+      this.update = new String("opened");
       this.context = option.context;
       this.activeStep = "ref";
     },
     removed() {},
     closed() {
-      this.update = "closed";
+      this.update = new String("closed");
     },
     async saveConfig() {
-      console.log("saving config");
       await saveConfig(this.context, this.config);
     }
   }

@@ -72,13 +72,16 @@ export default {
     return {};
   },
   watch: {
-    update() {
-      if (this.update != "opened") {
-        return;
-      }
+    update: {
+      immediate: true,
+      handler() {
+        if (this.update != "opened") {
+          return;
+        }
 
-      if (this.config.useAllDbIds) {
-        this.config.referential = this.allDbIds.slice();
+        if (this.config.useAllDbIds) {
+          this.config.referential = this.allDbIds.slice();
+        }
       }
     }
   },

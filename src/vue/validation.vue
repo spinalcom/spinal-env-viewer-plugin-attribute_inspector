@@ -86,9 +86,10 @@ export default {
     },
     async saveRecord() {
       const context = SpinalGraphService.getRealNode(this.context.id);
+      const model = window.spinal.ForgeViewer.viewer.model;
       const validDbIds = this.valid.map(obj => obj.dbId);
 
-      await createRecord(context, validDbIds, this.invalid);
+      await createRecord(context, model, validDbIds, this.invalid);
     }
   }
 };

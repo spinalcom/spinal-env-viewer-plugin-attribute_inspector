@@ -27,7 +27,7 @@ with this file. If not, see
     <md-checkbox v-model="config.useAllDbIds"
                  @change="changeMode"
                  class="md-primary">
-      Use whole digitital twin
+      Use whole digital twin
     </md-checkbox>
 
     <div v-show="!config.useAllDbIds">
@@ -95,21 +95,12 @@ export default {
       }
     },
     addSelection() {
-      const model = this.viewer.model;
-      const tree = model.getData().instanceTree;
       const selection = this.viewer.getSelection();
-      const queue = [...selection];
 
-      while (queue.length) {
-        let id = queue.shift();
+      for (let select of selection) {
+        let leafs = getLeafDbIds(select);
 
-        if (!this.config.referential.includes(id)) {
-          this.config.referential.push(id);
-        }
-
-        tree.enumNodeChildren(id, childId => {
-          queue.push(childId);
-        });
+        this.config.referential.push(...leafs);
       }
 
       this.$emit("configChanged");

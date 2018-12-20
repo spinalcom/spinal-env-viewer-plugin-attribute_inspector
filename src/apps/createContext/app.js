@@ -22,29 +22,37 @@
  * <http://resources.spinalcom.com/licenses.pdf>.
  */
 
-import Vue from "vue";
-
 import {
-  SpinalForgeExtention
-} from "spinal-env-viewer-panel-manager-service_spinalforgeextention";
+  SpinalContextApp
+} from "spinal-env-viewer-context-menu-service";
+import {
+  spinalPanelManagerService
+} from "spinal-env-viewer-panel-manager-service";
+import {
+  SpinalMountExtention
+} from "spinal-env-viewer-panel-manager-service";
 
-import panel from "./vue/panel.vue";
+import extention from "./extention";
 
-const extention = SpinalForgeExtention.createExtention({
-  name: "attribute_validator",
-  vueMountComponent: Vue.extend(panel),
-  panel: {
-    title: "Validate Attributes",
-    classname: "attr-val",
-    closeBehaviour: "hide"
-  },
-  style: {
-    left: "405px",
-    width: "420px",
-    height: "80vh"
-  },
-  onLoad() {},
-  onUnLoad() {}
-});
+SpinalMountExtention.mount(extention);
 
-export default extention;
+class App extends SpinalContextApp {
+  constructor() {
+    super("Create Validation Context", "This button creates a validation context", {
+      icon: "check",
+      icon_type: "in",
+      backgroundColor: "#FF0000",
+      fontColor: "#FFFFFF"
+    });
+  }
+
+  isShown() {
+    return Promise.resolve(true);
+  }
+
+  action() {
+    spinalPanelManagerService.openPanel("create_validation_context_dialog", {});
+  }
+}
+
+export default App;

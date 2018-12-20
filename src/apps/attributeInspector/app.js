@@ -29,12 +29,20 @@ import {
   spinalPanelManagerService
 } from "spinal-env-viewer-panel-manager-service";
 import {
+  SpinalForgeExtention
+} from "spinal-env-viewer-panel-manager-service_spinalforgeextention";
+
+import {
   VALIDATION_CONTEXT_TYPE
 } from "spinal-env-viewer-service-validation";
 
+import extention from "./extention";
+
+SpinalForgeExtention.registerExtention("attribute_inspector", extention);
+
 class App extends SpinalContextApp {
   constructor() {
-    super("Validate attributes", "Validates attributes", {
+    super("Inspect attributes", "Inspects attributes", {
       icon: "check",
       icon_type: "in",
       backgroundColor: "rgba(0, 0, 0, 0)",
@@ -55,7 +63,7 @@ class App extends SpinalContextApp {
   }
 
   action(option) {
-    spinalPanelManagerService.openPanel("attribute_validator", option);
+    spinalPanelManagerService.openPanel("attribute_inspector", option);
   }
 }
 

@@ -52,7 +52,7 @@ with this file. If not, see
 </template>
 
 <script>
-import { getAllLeafDbIds } from "../js/utilitiesDbIds";
+import { getAllLeafDbIds, getLeafDbIds } from "../js/utilitiesDbIds";
 
 export default {
   name: "referentialSelection",
@@ -103,6 +103,7 @@ export default {
         this.config.referential.push(...leafs);
       }
 
+      this.config.referential = [...new Set(this.config.referential)];
       this.$emit("configChanged");
     },
     clearReferential() {

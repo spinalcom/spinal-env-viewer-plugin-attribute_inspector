@@ -29,5 +29,5 @@ import {
 import CreateContext from "./src/apps/createContext/app";
 import AttributeInspector from "./src/apps/attributeInspector/app";
 
-spinalContextMenuService.registerApp("GraphManagerTopBar", new CreateContext());
-spinalContextMenuService.registerApp("GraphManagerSideBar", new AttributeInspector());
+spinalContextMenuService.registerApp("GraphManagerTopBar", new CreateContext(), [7]);
+spinalContextMenuService.registerApp("GraphManagerSideBar", new AttributeInspector(), [31]);

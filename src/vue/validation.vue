@@ -26,6 +26,7 @@
 import { SpinalGraphService } from "spinal-env-viewer-graph-service";
 
 import { createRecord } from "spinal-env-viewer-service-validation";
+import { assemblyManagerService } from "spinal-service-assembly-manager";
 
 import hasProperties from "../js/hasProperties";
 
@@ -79,10 +80,10 @@ export default {
         dbIds.push(prop.dbId);
       }
 
-      this.viewer.select(dbIds);
+      this.viewer.select(dbIds, assemblyManagerService._getCurrentModel());
     },
     selectInvalid() {
-      this.viewer.select(this.invalid);
+      this.viewer.select(this.invalid, assemblyManagerService._getCurrentModel());
     },
     async saveRecord() {
       const context = SpinalGraphService.getRealNode(this.context.id);

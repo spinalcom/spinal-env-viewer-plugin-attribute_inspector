@@ -102,7 +102,7 @@ export default {
      * Adds the current selection to the referential. Discards all non-leaf dbIds.
      */
     addSelection() {
-      const selection = this.viewer.getSelection();
+      const selection = this.viewer.getAggregateSelection()[0].selection;
 
       for (let select of selection) {
         let leafs = getLeafDbIds(select);
